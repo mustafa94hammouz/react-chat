@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -38,7 +38,23 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function Registration() {
+  const [values, setValues] = useState({
+    fName: "",
+    lName: "",
+    email: "",
+    password: ""
+  });
+
   const classes = useStyles();
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const signUp = () => {
+    console.log(values);
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -54,13 +70,15 @@ export function Registration() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete='fname'
-                name='firstName'
+                name='fName'
                 variant='outlined'
                 required
                 fullWidth
-                id='firstName'
+                id='fName'
                 label='First Name'
                 autoFocus
+                value={values.fName}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -68,10 +86,12 @@ export function Registration() {
                 variant='outlined'
                 required
                 fullWidth
-                id='lastName'
+                id='lName'
                 label='Last Name'
-                name='lastName'
+                name='lName'
                 autoComplete='lname'
+                value={values.lname}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -83,6 +103,8 @@ export function Registration() {
                 label='Email Address'
                 name='email'
                 autoComplete='email'
+                value={values.email}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,11 +117,13 @@ export function Registration() {
                 type='password'
                 id='password'
                 autoComplete='current-password'
+                value={values.password}
+                onChange={handleInputChange}
               />
             </Grid>
           </Grid>
           <Button
-            type='submit'
+            onClick={signUp}
             fullWidth
             variant='contained'
             color='primary'
