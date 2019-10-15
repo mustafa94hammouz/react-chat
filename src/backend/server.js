@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
+var cors = require("cors");
 const user = require("./routes/user.route");
 const app = express();
 
@@ -13,10 +13,11 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/users", user);
+app.use("/register", user);
 
 let port = 1234;
 
