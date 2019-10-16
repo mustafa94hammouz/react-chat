@@ -51,7 +51,17 @@ export function Registration() {
   };
 
   const signUp = () => {
-    register(values);
+    register(values)
+      .then(response => {
+        if (response.status === 200) {
+          alert(
+            "Welcome " + response.data.firstName + " " + response.data.lastName
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (

@@ -11,6 +11,6 @@ exports.user_create = function(req, res) {
 
   user.save(function(err) {
     if (err) return handleError(err);
-    res.send("User Created successfully");
+    res.send(user);
   });
 };

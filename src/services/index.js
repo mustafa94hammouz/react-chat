@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default function register(data) {
-  axios({
+  return axios({
     method: "post",
     url: "http://localhost:1234/register/",
     data: {
