@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import register from "../services/index";
+import register from "../services/userRegister";
 
 const useStyles = makeStyles(theme => ({
   "@global": {
@@ -56,11 +56,14 @@ export function Registration() {
   const signUp = () => {
     register(values)
       .then(response => {
-        if (response.status === 200) {
+        if (response.data === "Email Already exist") {
+          alert("Email already exist!");
+        } else {
+          alert("Welcome " + values.fName);
         }
       })
       .catch(error => {
-        console.log(error);
+        error(error);
       });
   };
 

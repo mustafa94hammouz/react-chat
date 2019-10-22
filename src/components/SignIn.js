@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
@@ -14,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import login from "../services/userLogin";
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
@@ -40,7 +41,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function SignIn() {
+  const [values, setValues] = useState({
+    email: "",
+    password: ""
+  });
+
   const classes = useStyles();
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleLogin = e => {
+    e.preventDefault();
+    login(values)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <Container component='main' maxWidth='xs'>
@@ -54,6 +76,7 @@ export function SignIn() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            onChange={e => handleInputChange(e)}
             variant='outlined'
             margin='normal'
             required
@@ -65,6 +88,7 @@ export function SignIn() {
             autoFocus
           />
           <TextField
+            onChange={e => handleInputChange(e)}
             variant='outlined'
             margin='normal'
             required
@@ -80,6 +104,7 @@ export function SignIn() {
             label='Remember me'
           />
           <Button
+            onClick={handleLogin}
             type='submit'
             fullWidth
             variant='contained'
