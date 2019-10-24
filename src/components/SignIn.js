@@ -7,7 +7,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-// import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -15,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import login from "../services/userLogin";
+
 const useStyles = makeStyles(theme => ({
   "@global": {
     body: {
@@ -56,8 +56,8 @@ export function SignIn() {
   const handleLogin = e => {
     e.preventDefault();
     login(values)
-      .then(response => {
-        console.log(response);
+      .then(resp => {
+        localStorage.setItem("token", resp.data);
       })
       .catch(error => {
         console.log(error);

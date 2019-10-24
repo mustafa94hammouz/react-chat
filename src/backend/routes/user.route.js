@@ -4,6 +4,9 @@ const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 let salt = bcrypt.genSaltSync(10);
 
+const secret = "mysecretsshhh";
+const jwt = require("jsonwebtoken");
+
 router.post("/register", (req, res, next) => {
   User.find({ email: req.body.email })
     .exec()
@@ -26,12 +29,22 @@ router.post("/register", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
+  const { email, password } = req.body;
   User.findOne({ email: req.body.email })
     .exec()
     .then(user => {
       if (user) {
-        console.log("account found");
-        res.send(user);
+        console.log("account/Email found --- User Login");
+        bcrypt.compare(password, user.password, function(err, result) {
+          console.log("password match? ", result);
+          if (result) {
+            const payload = { email };
+            const token = jwt.sign(payload, secret, {
+              expiresIn: "1 h"
+            });
+            res.send(token);
+          }
+        });
       } else {
         console.log("account doesn't exist");
       }
