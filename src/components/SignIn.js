@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -40,12 +40,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function SignIn() {
+const SignIn = withRouter(props => {
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      props.history.push("/profile");
+    }
+  });
+
   const [values, setValues] = useState({
     email: "",
     password: ""
   });
-
   const classes = useStyles();
 
   const handleInputChange = e => {
@@ -58,6 +63,7 @@ export function SignIn() {
     login(values)
       .then(resp => {
         localStorage.setItem("token", resp.data);
+        props.history.push("/profile");
       })
       .catch(error => {
         console.log(error);
@@ -122,4 +128,6 @@ export function SignIn() {
       </div>
     </Container>
   );
-}
+});
+
+export default withRouter(SignIn);

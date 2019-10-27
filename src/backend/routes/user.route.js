@@ -51,4 +51,17 @@ router.post("/login", (req, res, next) => {
     });
 });
 
+router.get("/profile", (req, res, next) => {
+  let decodedJwt = jwt.decode(req.headers.authorization);
+  User.findOne({ email: decodedJwt.email })
+    .exec()
+    .then(user => {
+      if (user) {
+        res.send(user);
+      } else {
+        console.log("account doesn't exist");
+      }
+    });
+});
+
 module.exports = router;
