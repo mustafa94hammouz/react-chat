@@ -31,13 +31,14 @@ const UserProfile = withRouter(props => {
   useEffect(() => {
     if (localStorage.getItem("token") == null) {
       props.history.push("/login");
-    }
-    getProfile(localStorage.getItem("token")).then(res => {
-      setData({
-        userName: res.data.firstName,
-        email: res.data.email
+    } else {
+      getProfile(localStorage.getItem("token")).then(res => {
+        setData({
+          userName: res.data.firstName,
+          email: res.data.email
+        });
       });
-    });
+    }
   });
 
   const handleLogOut = () => {
