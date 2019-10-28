@@ -15,7 +15,7 @@ import UsersList from "../components/usersList";
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: 345
+    maxWidth: "100%"
   },
   media: {
     height: 140
@@ -66,7 +66,9 @@ const UserProfile = withRouter(props => {
       <CardActions>
         <UsersList />
       </CardActions>
-      <Button onClick={handleLogOut}>Logout</Button>
+      <Button onClick={handleLogOut} color='secondary'>
+        Logout
+      </Button>
     </Card>
   );
 });
