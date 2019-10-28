@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
 import getProfile from "../services/getProfile";
+import UsersList from "../components/usersList";
 
 const useStyles = makeStyles({
   card: {
@@ -63,10 +64,9 @@ const UserProfile = withRouter(props => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='secondary' onClick={handleLogOut}>
-          Logout
-        </Button>
+        <UsersList />
       </CardActions>
+      <Button onClick={handleLogOut}>Logout</Button>
     </Card>
   );
 });

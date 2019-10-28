@@ -64,4 +64,14 @@ router.get("/profile", (req, res, next) => {
     });
 });
 
+router.get("/users", (req, res, next) => {
+  let decodedJwt = jwt.decode(req.headers.authorization);
+  User.find({ email: { $ne: decodedJwt.email } })
+    .select("-password")
+    .exec()
+    .then(users => {
+      res.send(users);
+    });
+});
+
 module.exports = router;
